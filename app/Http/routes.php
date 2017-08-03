@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/', 'WelcomeController@index');
+Route::get('favarite', 'WelcomeController@favalit')->name('favarit.get');
 
 // ユーザ登録
 Route::get('signup', 'Auth\AuthController@getRegister')->name('signup.get');
@@ -32,5 +33,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('followings', 'UsersController@followings')->name('users.followings');
         Route::get('followers', 'UsersController@followers')->name('users.followers');
     });    
+
     Route::resource('microposts', 'MicropostsController', ['only' => ['store', 'destroy']]);
+    
+    Route::group(['prefix' => 'microposts/{id}'], function () { 
+        Route::post('favorite', 'MicropostFavoriteController@store')->name('user.favorite');
+        Route::delete('unfavarite', 'MicropostFavoriteController@destroy')->name('user.unfavarite');
+        Route::get('favaritings', 'MicropostFavoriteController@favaritings')->name('users.favaritings');
+        Route::get('favariteds', 'MicropostFavoriteController@favariteds')->name('users.favariteds');
+    });    
 });

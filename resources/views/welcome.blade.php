@@ -15,6 +15,10 @@
             </aside>
             <div class="col-xs-8">
                 @if (count($microposts) > 0)
+                    <ul class="nav nav-tabs nav-justified" style="margin-bottom: 20px">
+                      <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Microposts</a></li>
+                      <li class="{{ Request::is('favarite') ? 'active' : '' }}"><a href="/favarite">FabariMessages</a></li>
+                    </ul>                  
                     @include('microposts.microposts', ['microposts' => $microposts])
                 @endif
             </div>

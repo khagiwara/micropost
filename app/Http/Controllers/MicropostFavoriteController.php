@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class WelcomeController extends Controller
+class MicropostFavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,35 +16,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $data = [];
-        if (\Auth::check()) {
-            $user = \Auth::user();
-            $microposts = $user->feed_microposts()->orderBy('created_at', 'desc')->paginate(10);
-            $count_microposts = $user->microposts()->count();
-            $data = [
-                'user' => $user,
-                'microposts' => $microposts,
-            ];
-        }
-        return view('welcome', $data);
-
-    }
-    public function favalit()
-    {
-        $data = [];
-        if (\Auth::check()) {
-            $user = \Auth::user();
-            $microposts = $user->favaritings()->paginate(10);
-            $count_microposts = $user->favaritings()->count();
-
-            $data = [
-                'user' => $user,
-                'microposts' => $microposts,
-            ];
-            $data += $this->counts($user);
-        }
-        return view('welcome', $data);
-
+        //
     }
 
     /**
@@ -63,9 +35,10 @@ class WelcomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        //
+        \Auth::user()->favarite($id);
+        return redirect()->back();       
     }
 
     /**
@@ -110,6 +83,9 @@ class WelcomeController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        \Auth::user()->unfavarite($id);
+        return redirect()->back();   
+
     }
 }
