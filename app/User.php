@@ -131,5 +131,6 @@ class User extends Model implements AuthenticatableContract,
     public function is_favariting($micropostid) {
         return $this->favaritings()->where('micropost_id', $micropostid)->exists();
     }
+    
         
 }
