@@ -15,12 +15,12 @@ class CreateUserFollowTable extends Migration
         Schema::create('user_follow', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->integer('micropost_id')->unsigned()->index();
+            $table->integer('follow_id')->unsigned()->index();
             $table->timestamps();
             
             // 外部キー設定
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('micropost_id')->references('id')->on('users');
+            $table->foreign('follow_id')->references('id')->on('users');
 
             // user_idとfollow_idの組み合わせの重複を許さない
             $table->unique(['user_id', 'follow_id']);
