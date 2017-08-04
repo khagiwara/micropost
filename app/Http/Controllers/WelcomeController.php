@@ -27,7 +27,6 @@ class WelcomeController extends Controller
             ];
         }
         return view('welcome', $data);
-
     }
     public function favalit()
     {
@@ -35,7 +34,7 @@ class WelcomeController extends Controller
         if (\Auth::check()) {
             $user = \Auth::user();
             $microposts = $user->favaritings()->paginate(10);
-            $count_microposts = $user->favaritings()->count();
+            $count_microposts = $user->microposts()->count();
 
             $data = [
                 'user' => $user,

@@ -16,7 +16,19 @@ class MicropostFavoriteController extends Controller
      */
     public function index()
     {
-        //
+        $data = [];
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $microposts = $user->favaritings()->paginate(10);
+            $count_microposts = $user->favaritings()->count();
+
+            $data = [
+                'user' => $user,
+                'microposts' => $microposts,
+            ];
+            $data += $this->counts($user);
+        }
+        return view('welcome', $data);
     }
 
     /**
